@@ -33,13 +33,17 @@
 		$("#sendMsg").focus();
 	});
 	
+	var loginName = "";
+	
 	function receive(mainVo) {
-          $("#sendMsg").val("");
+		if(loginName != mainVo.name) {
           $("#viewMsg").append(mainVo.name + "님의 말 : ");
           $("#viewMsg").append("\r\n");
+		}
+		loginName = mainVo.name;
           $("#viewMsg").append("· "+ mainVo.content);
           $("#viewMsg").append("\r\n");
-          $("#viewMsg").scrollTop(parseInt(document.body.scrollHeight));
+          $('#viewMsg').scrollTop($('#viewMsg')[0].scrollHeight);
 	}
 	
 	function send() {
@@ -51,7 +55,7 @@
 		}
 		MainController.sendMessage({content:str},
 			function(data) {
-
+			$("#sendMsg").val("");
 		});
 	}
 	
