@@ -27,23 +27,36 @@
 		}
 	*/
 	
-	//DWR Reverse Ajax 활성화
-    dwr.engine.setActiveReverseAjax(true);
+	$(document).ready(function() {
+		//DWR Reverse Ajax 활성화
+	    dwr.engine.setActiveReverseAjax(true);
+		$("#sendMsg").focus();
+	});
 	
-	function receive(message) {
+	function receive(mainVo) {
           $("#sendMsg").val("");
-          $("#viewMsg").append("님의 말 : ");
-          $("#viewMsg").append("<br>");
-          $("#viewMsg").append("·"+ message);
-          $("#viewMsg").append("<br>");
+          $("#viewMsg").append(mainVo.name + "님의 말 : ");
+          $("#viewMsg").append("\r\n");
+          $("#viewMsg").append("· "+ mainVo.content);
+          $("#viewMsg").append("\r\n");
           $("#viewMsg").scrollTop(parseInt(document.body.scrollHeight));
 	}
 	
 	function send() {
-		MainController.sendMessage({content:$("#sendMsg").val()},
+		var str = $("#sendMsg").val();
+		str = str.replace(/[\r|\n]/g, '');
+		if(str == "") {
+			 $("#sendMsg").val("");
+			return;
+		}
+		MainController.sendMessage({content:str},
 			function(data) {
 
 		});
+	}
+	
+	function logOut() {
+		   $("#logoutForm").submit();
 	}
 
 
@@ -58,6 +71,8 @@ ul{
 </style>
 </head>
 <body>
+	<form id="logoutForm" action="/magnetic/logout">
+	</form>
 	<ul>
 		<li>
 			<textarea rows="20" cols="50" id="viewMsg" readonly="readonly"></textarea>
@@ -65,7 +80,7 @@ ul{
 		<li>
 		
 		<textarea rows="2" cols="50" id="sendMsg"  onKeypress="if(event.keyCode==13){send();}"></textarea>
-			<!-- <input type="button" value="send" onclick="send();"/> -->
+			<input type="button" value="logout" onclick="logOut();"/>
 		</li>
 		
 	</ul>
