@@ -29,29 +29,49 @@ public class MainController {
 	private MainService mainService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, String sendMsg) {
+	public String goLogin(HttpServletRequest request, Model model, MainVo mainVo) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("name") != null) {
+			return "home";
+		}
+		return "login";
+	}
+	
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String actionLogin(HttpServletRequest request, Model model, MainVo mainVo) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("name") != null) {
+			return "home";
+		} else {
+			session.setAttribute("name", mainVo.getName());
+		}
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String actionLogout(HttpServletRequest request, Model model, MainVo mainVo) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(HttpServletRequest request, Model model, String sendMsg) {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/send", method = RequestMethod.GET)
-	public @ResponseBody String sendMsg(HttpServletRequest request, Model model, String sendMsg) {
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("idlNm", "guest");
-				
-		notifyAllClients("receive", sendMsg);
-		return sendMsg;
-	}
-	
 	public void sendMessage(MainVo mainVo) {
-		notifyAllClients("receive", mainVo.getContent());
+		HttpSession session = WebContextFactory.get().getSession(); 
+		mainVo.setName((String)session.getAttribute("name"));
+		notifyAllClients("receive", mainVo);
 	}
 	
 	//연결된 클라이언트로 Push
-	private void notifyAllClients(String eventType, String message) {
-		getScriptProxy().addFunctionCall(eventType, message);
+	private void notifyAllClients(String eventType, MainVo mainVo) {
+		getScriptProxy().addFunctionCall(eventType, mainVo);
 	}
  
     //연결된 클라이언트 조회
