@@ -4,11 +4,12 @@
 <%@ page session="false" %>
 <html>
 <head>
-<c:import url="/WEB-INF/jsp/common/common.jsp"/>
+<!--<c:import url="/WEB-INF/jsp/common/common.jsp"/>-->
 	<title>Home</title>
 <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/MainController.js"/>"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript">
 	/*
 		function send() {
@@ -31,13 +32,18 @@
 		//DWR Reverse Ajax 활성화
 	    dwr.engine.setActiveReverseAjax(true);
 		$("#sendMsg").focus();
+		
+		MainController.connect({},
+				function(data) {
+			
+		});
 	});
 	
 	var loginName = "";
 	
 	function receive(mainVo) {
 		if(loginName != mainVo.name) {
-          $("#viewMsg").append(mainVo.name + "님의 말 : ");
+          $("#viewMsg").append(mainVo.name + " 님의 말 : ");
           $("#viewMsg").append("\r\n");
 		}
 		loginName = mainVo.name;
@@ -62,10 +68,14 @@
 	function logOut() {
 		   $("#logoutForm").submit();
 	}
-
+	
+	function connect(mainVo) {
+		$("#viewMsg").append(mainVo.name + " 님이 접속 하였습니다.");
+		$("#viewMsg").append("\r\n");
+	}
+	    
 
 </script>
-
 
 
 <style>
@@ -82,11 +92,15 @@ ul{
 			<textarea rows="20" cols="50" id="viewMsg" readonly="readonly"></textarea>
 		</li>
 		<li>
-		
-		<textarea rows="2" cols="50" id="sendMsg"  onKeypress="if(event.keyCode==13){send();}"></textarea>
-			<input type="button" value="logout" onclick="logOut();"/>
+			<textarea rows="2" cols="50" id="sendMsg"  onKeypress="if(event.keyCode==13){send();}"></textarea>
 		</li>
 		
+	</ul>
+	
+	<ul>
+		<li>
+			<input type="button" value="logout" onclick="logOut();"/>
+		</li>
 	</ul>
 </body>
 </html>
