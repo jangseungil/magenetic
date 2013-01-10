@@ -1,5 +1,7 @@
 package com.merong.home.vo;
 
+import java.util.Date;
+
 
 public class HomeVo {
 
@@ -7,7 +9,7 @@ public class HomeVo {
 	
 	private String content="";
 	
-	private String date="";
+	private Date date;
 
 	public String getName() {
 		return name;
@@ -25,11 +27,11 @@ public class HomeVo {
 		this.content = content;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 }

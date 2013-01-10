@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<form action="/bookMark" method="get">
+		<form action="/home/insert" method="post">
 			<h1>방명록</h1>
 			<table>
 				<tr>

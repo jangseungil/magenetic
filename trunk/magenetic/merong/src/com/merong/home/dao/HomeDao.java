@@ -7,4 +7,5 @@ import com.merong.home.vo.HomeVo;
 public interface HomeDao {
 	List<HomeVo> selectBookMarkList();
 	
+	void insertBookMark(HomeVo homeVo);
 }

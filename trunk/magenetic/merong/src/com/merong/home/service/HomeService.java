@@ -6,4 +6,6 @@ import com.merong.home.vo.HomeVo;
 
 public interface HomeService {
 	List<HomeVo> selectBookMarkList();
+	
+	void insertBookMark(HomeVo homeVo);
 }
