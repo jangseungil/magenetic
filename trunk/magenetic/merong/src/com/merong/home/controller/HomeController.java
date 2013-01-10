@@ -52,7 +52,6 @@ public class HomeController {
 	@RequestMapping(value = "/html5/insert", method = RequestMethod.POST)
 	public String insertScore(Model model, ScoreVo scoreVo) {
 		
-		System.out.println(scoreVo.getGubun());
 		homeServiceImpl.insertScore(scoreVo);
 		return "redirect:/home/html5";
 	}

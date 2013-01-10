@@ -38,6 +38,10 @@ public class HomeServiceImpl implements HomeService{
 	public void insertScore(ScoreVo scoreVo) {
 		for(String name : scoreVo.getParamName()) {
 			scoreVo.setName(name);
+			if("gubun1".equals(scoreVo.getGubun())) {
+				
+			}
+			
 			homeDaoImpl.insertScore(scoreVo);
 		}
 	}
