@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.merong.home.dao.HomeDao;
 import com.merong.home.vo.HomeVo;
+import com.merong.home.vo.ScoreVo;
 
 @Repository
 public class HomeDaoImpl implements HomeDao{
@@ -53,6 +54,17 @@ public class HomeDaoImpl implements HomeDao{
 		
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(greeting);
+	}
+	
+	@Override
+	public void insertScore(ScoreVo scoreVo) {
+		Key scoreKey = KeyFactory.createKey("ScoreSeq", "1");
+		
+		Entity score = new Entity("TN_SCORE", scoreKey);
+		score.setProperty("name", scoreVo.getName());
+		score.setProperty("gubun", scoreVo.getGubun());
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(score);
 	}
 
 }

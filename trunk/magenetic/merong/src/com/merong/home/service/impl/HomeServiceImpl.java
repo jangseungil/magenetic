@@ -14,12 +14,14 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.merong.home.dao.impl.HomeDaoImpl;
 import com.merong.home.service.HomeService;
 import com.merong.home.vo.HomeVo;
+import com.merong.home.vo.ScoreVo;
 
 @Service
 public class HomeServiceImpl implements HomeService{
 	@Autowired
 	private HomeDaoImpl homeDaoImpl;
 	
+	@Override
 	public List<HomeVo> selectBookMarkList() {
 		return homeDaoImpl.selectBookMarkList();
 	}
@@ -31,5 +33,14 @@ public class HomeServiceImpl implements HomeService{
 		homeVo.setDate(c.getTime());
 		homeDaoImpl.insertBookMark(homeVo);
 	}
+
+	@Override
+	public void insertScore(ScoreVo scoreVo) {
+		for(String name : scoreVo.getParamName()) {
+			scoreVo.setName(name);
+			homeDaoImpl.insertScore(scoreVo);
+		}
+	}
+	
 	
 }
