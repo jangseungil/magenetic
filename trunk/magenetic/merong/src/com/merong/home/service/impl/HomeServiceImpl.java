@@ -13,6 +13,7 @@ import com.merong.home.dao.impl.HomeDaoImpl;
 import com.merong.home.service.HomeService;
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.UserVo;
 
 @Service
 public class HomeServiceImpl implements HomeService{
@@ -118,6 +119,24 @@ public class HomeServiceImpl implements HomeService{
 		//Collections.reverse(rankingInfoList); //역순
 		return rankingInfoList;
 	}
-	
+
+	@Override
+	public void insertUser(UserVo userVo) {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.HOUR, 9);
+		userVo.setDate(c.getTime());
+		homeDaoImpl.insertUser(userVo);
+	}
+
+	@Override
+	public List<UserVo> selectUserList() {
+		return homeDaoImpl.selectUserList();
+	}
+
+	@Override
+	public void deleteUser(UserVo userVo) {
+		homeDaoImpl.deleteUser(userVo);
+		
+	}
 	
 }

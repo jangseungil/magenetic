@@ -107,6 +107,13 @@ input.textScore
 	height: 27px;
 }
 
+input.textUserName
+{
+	width: 100px;
+	margin-top: 2px;
+	height: 27px;
+}
+
 
 div.insertDiv
 {
@@ -230,4 +237,12 @@ input.submitBtn
 	margin-left:10px;
 	width:100px;
 	height:35px;
+}
+input.btnR
+{
+	margin-top:3px;
+	margin-left:10px;
+	width:100px;
+	height:35px;
+	float:right;
 }

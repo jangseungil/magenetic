@@ -19,6 +19,14 @@
 	    } 
 		window.event.returnValue = false; 
 	}
+	
+	function userAdd() {
+		window.location.href = "/home/user";
+	}
+	
+	function back() {
+		window.location.href ="/home";
+	}
 </script>
 </head>
 <body>
@@ -26,24 +34,26 @@
 		<div class="insertDiv">
 			<input type="radio" name="gubun" value="gubun1" checked> 
 			<select name="paramName">
-				<option>u1</option>
-				<option>u2</option>
-				<option>u3</option>
+				<c:forEach var="userVo" items="${userVoList}" varStatus="status">
+					<option>${userVo.name}</option>
+				</c:forEach>
 			</select>
 			<input class="textScore" name="score1" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
 			vs
 			<select name="paramName">
-				<option>u1</option>
-				<option>u2</option>
-				<option>u3</option>
+				<c:forEach var="userVo" items="${userVoList}" varStatus="status">
+					<option>${userVo.name}</option>
+				</c:forEach>
 			</select>
 			<input class="textScore" name="score2" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
 			<input type="radio" name="gubun" value="gubun2">
 			<!-- <div class="btn1" onclick="insertScore()">send</div> -->
 			<input class="submitBtn" type="submit" value="send"/>
+			<input class="btnR" type="button" value="back" onclick="back();"/>
+			<input class="btnR" type="button" value="userAdd" onclick="userAdd()"/>
 		</div>
 	</form>
-
+	
 	<h3>ranking</h3>
 
 	<table cellspacing="0" border="1" class="tb_lstsrch">

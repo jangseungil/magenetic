@@ -12,11 +12,13 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PropertyProjection;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.merong.home.dao.HomeDao;
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.UserVo;
 
 @Repository
 public class HomeDaoImpl implements HomeDao{
@@ -87,6 +89,51 @@ public class HomeDaoImpl implements HomeDao{
 		score.setProperty("date", scoreVo.getDate());
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		datastore.put(score);
+	}
+
+	@Override
+	public void insertUser(UserVo userVo) {
+		Key userKey = KeyFactory.createKey("userSeq", "1");
+        
+        Entity user = new Entity("TN_USER", userKey);
+        user.setProperty("name", userVo.getName());
+        user.setProperty("date", userVo.getDate());
+		
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(user);
+	}
+	
+	@Override
+	public List<UserVo> selectUserList() {
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Query query = new Query("TN_USER").addSort("date", Query.SortDirection.DESCENDING);
+	    
+	    List<Entity> userLists = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
+        List<UserVo> userVoList = new ArrayList<UserVo>();
+        
+        for (Entity user : userLists) {
+        	UserVo userVo = new UserVo();
+        	userVo.setName((String)user.getProperty("name"));
+        	userVo.setDate((Date)user.getProperty("date"));
+        	userVoList.add(userVo);
+        }
+
+        return userVoList;
+	}
+
+	@Override
+	public void deleteUser(UserVo userVo) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Query query = new Query("TN_USER");
+	    query.addFilter("name", FilterOperator.EQUAL, userVo.getName());
+	    PreparedQuery pq = datastore.prepare(query);
+	    List<Entity> customer = pq.asList(FetchOptions.Builder.withLimit(9999));
+	    
+	    for(Entity entity : customer) {
+	    	datastore.delete(entity.getKey()); //delete it
+	    }
+	    	
+		
 	}
 
 

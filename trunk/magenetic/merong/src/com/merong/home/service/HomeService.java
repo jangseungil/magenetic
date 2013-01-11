@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.UserVo;
 
 public interface HomeService {
 	List<HomeVo> selectBookMarkList();
@@ -16,4 +17,9 @@ public interface HomeService {
 	
 	List<ScoreVo> selectRankingList();
 	
+	void insertUser(UserVo userVo);
+	
+	List<UserVo> selectUserList();
+	
+	void deleteUser(UserVo userVo);	
 }
