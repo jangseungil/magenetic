@@ -46,6 +46,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/html5")
 	public String goHtml5(Model model) {
+		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList());
+		model.addAttribute("scoreVoList", homeServiceImpl.selectScoreHistoryList());
 		return "html5/html5";
 	}
 	

@@ -1,6 +1,5 @@
 package com.merong.home.dao.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +12,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PropertyProjection;
 import com.google.appengine.api.datastore.Query;
 import com.merong.home.dao.HomeDao;
 import com.merong.home.vo.HomeVo;
@@ -28,8 +28,6 @@ public class HomeDaoImpl implements HomeDao{
 	    Query query = new Query("TN_BOOKMARK").addSort("date", Query.SortDirection.DESCENDING);
 	    
 	    List<Entity> bookMarks = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
         List<HomeVo> homeVoList = new ArrayList<HomeVo>();
         
         for (Entity bookmark : bookMarks) {
@@ -55,16 +53,41 @@ public class HomeDaoImpl implements HomeDao{
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(greeting);
 	}
+
+	@Override
+	public List<ScoreVo> selectScoreHistoryList() {
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Query query = new Query("TN_SCORE").addSort("date", Query.SortDirection.DESCENDING);
+	    
+	    List<Entity> scoreHistorys = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
+        List<ScoreVo> scoreVoList = new ArrayList<ScoreVo>();
+        
+        for (Entity scoreHistory : scoreHistorys) {
+        	ScoreVo scoreVo = new ScoreVo();
+        	scoreVo.setWinner((String) scoreHistory.getProperty("winner"));
+        	scoreVo.setLooser((String) scoreHistory.getProperty("looser"));
+        	scoreVo.setWinnerScore((String) scoreHistory.getProperty("winnerScore"));
+        	scoreVo.setLooserScore((String) scoreHistory.getProperty("looserScore"));
+        	scoreVo.setDate((Date)scoreHistory.getProperty("date"));
+        	scoreVoList.add(scoreVo);
+        }
+
+        return scoreVoList;
+	}
 	
 	@Override
 	public void insertScore(ScoreVo scoreVo) {
 		Key scoreKey = KeyFactory.createKey("ScoreSeq", "1");
 		
 		Entity score = new Entity("TN_SCORE", scoreKey);
-		score.setProperty("name", scoreVo.getName());
-		score.setProperty("gubun", scoreVo.getGubun());
+		score.setProperty("winner", scoreVo.getWinner());
+		score.setProperty("looser", scoreVo.getLooser());
+		score.setProperty("winnerScore", scoreVo.getWinnerScore());
+		score.setProperty("looserScore", scoreVo.getLooserScore());
+		score.setProperty("date", scoreVo.getDate());
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		datastore.put(score);
 	}
+
 
 }

@@ -17,11 +17,11 @@
 </head>
 <body>
 	<form action="/home/insert" method="post">
-		<div class="maintitle"><h1 class="maintitle">whatthehellareudoing</h1></div>
-		
-		<div class="subtitle1" onclick="goBookMark();"><div class="alignCenter">BookMark</div></div>
-	
-		<div class="subtitle2" onclick="goHtml5();"><div class="alignCenter">html5</div></div>
+		<div class="mainDiv">
+			<div class="maintitle"><h1 class="maintitle">abcd efgh ijkl</h1></div>
+			<div class="subtitle2" onclick="goBookMark();"><div class="alignCenter">BookMark</div></div>
+			<div class="subtitle2" onclick="goHtml5();"><div class="alignCenter">Score History</div></div>
+		</div>
 		
 	</form>
 </body>

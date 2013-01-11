@@ -12,5 +12,6 @@ public interface HomeDao {
 	
 	void insertScore(ScoreVo scoreVo);
 	
+	List<ScoreVo> selectScoreHistoryList();
 	
 }

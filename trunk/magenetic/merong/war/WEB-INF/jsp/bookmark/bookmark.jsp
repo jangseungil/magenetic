@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="/WEB-INF/jsp/common/common.jsp"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -31,27 +32,43 @@
 
 
         
-        
-      	<table border="1" cellpadding="2" cellspacing="0">
-      		<tr>
-      			<td>이름</td>
-      			<td>내용</td>
-      			<td>날짜</td>
-      		</tr>
-			
-        <c:forEach var="homeVo" items="${HomeVoList}">
-   			<tr>
-				<td width="10%">
-					<c:out value="${homeVo.name}"/>
-				</td>
-				<td width="70%">
-					<c:out value="${homeVo.content}"/>
-				</td>
-				<td width="20%">
-					<fmt:formatDate value="${homeVo.date}" pattern="yy-MM-dd hh:mm:ss"/>
-				</td>
-			</tr>
-		</c:forEach>
-   		</table>
+   	<table cellspacing="0" border="1" class="tb_lstsrch">
+	    <colgroup>
+		    <col width="33">
+		    <col width="33">
+		    <col width="40">
+	    </colgroup>
+	    <thead>
+		    <tr>
+		    <th scope="col" class="td_type">이름</th>
+		    <th scope="col" class="td_type">내용</th>
+		    <th scope="col" class="td_type">날짜</th>
+		    </tr>
+	    </thead>
+	 	<tbody>
+	 		<c:set var="trClassNm" value=""/>
+	 	    <c:forEach var="homeVo" items="${HomeVoList}" varStatus="status">
+		 	    <c:choose>
+					<c:when test="${status.index == 0}">
+						<c:set var="trClassNm" value="frst"/>
+					</c:when>
+					<c:otherwise>
+						<c:set var="trClassNm" value=""/>
+					</c:otherwise>
+				</c:choose>
+				<tr class="${trClassNm}">
+			    	<td class="td_type">
+			    		<c:out value="${homeVo.name}"/>
+				    </td>
+			    	<td class="td_type">
+							<c:out value="${homeVo.content}"/>
+					</td>
+					<td class="td_type">
+						<fmt:formatDate value="${homeVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
+					</td>
+			    </tr>
+        	</c:forEach>
+	    </tbody>
+    </table>
 </body>
 </html>

@@ -12,4 +12,8 @@ public interface HomeService {
 	
 	void insertScore(ScoreVo scoreVo);
 	
+	List<ScoreVo> selectScoreHistoryList();
+	
+	List<ScoreVo> selectRankingList();
+	
 }

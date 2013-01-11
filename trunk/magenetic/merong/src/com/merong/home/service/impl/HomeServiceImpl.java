@@ -1,16 +1,14 @@
 package com.merong.home.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.merong.home.dao.impl.HomeDaoImpl;
 import com.merong.home.service.HomeService;
 import com.merong.home.vo.HomeVo;
@@ -36,14 +34,89 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public void insertScore(ScoreVo scoreVo) {
+		
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.HOUR, 9);
+		scoreVo.setDate(c.getTime());
+		
+		int i = 0;
 		for(String name : scoreVo.getParamName()) {
-			scoreVo.setName(name);
-			if("gubun1".equals(scoreVo.getGubun())) {
-				
-			}
 			
-			homeDaoImpl.insertScore(scoreVo);
+			if(i==0) {
+				if("gubun1".equals(scoreVo.getGubun())) {
+					scoreVo.setWinner(name);
+					scoreVo.setWinnerScore(scoreVo.getScore1());
+				} else {
+					scoreVo.setLooser(name);
+					scoreVo.setLooserScore(scoreVo.getScore1());
+				}
+			} else {
+				if("gubun2".equals(scoreVo.getGubun())) {
+					scoreVo.setWinner(name);
+					scoreVo.setWinnerScore(scoreVo.getScore2());
+				} else {
+					scoreVo.setLooser(name);
+					scoreVo.setLooserScore(scoreVo.getScore2());
+				}
+			}
+
+			i++;
 		}
+		homeDaoImpl.insertScore(scoreVo);
+	}
+
+	@Override
+	public List<ScoreVo> selectScoreHistoryList() {
+		return homeDaoImpl.selectScoreHistoryList();
+	}
+
+	@Override
+	public List<ScoreVo> selectRankingList() {
+		List<ScoreVo> scoreVoList =  homeDaoImpl.selectScoreHistoryList();
+		
+		List<String> winnerList = new ArrayList<String>();
+		
+		for(ScoreVo scoreVo: scoreVoList) {
+			winnerList.add(scoreVo.getWinner());
+			winnerList.add(scoreVo.getLooser());
+		}
+		
+		List<String> uniqueWinnerList = new ArrayList<String>(new HashSet<String>(winnerList));
+		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
+	
+		for(String name : uniqueWinnerList) {
+			int winCnt = 0;
+			int defeatCnt = 0;
+			ScoreVo scoreVoForRanking = new ScoreVo();
+		
+			for(ScoreVo scoreVo: scoreVoList) {
+				if(name.equals(scoreVo.getWinner())) {
+					winCnt++;
+				}
+				if(name.equals(scoreVo.getLooser())) {
+					defeatCnt++;
+				}
+			}
+			scoreVoForRanking.setName(name);
+			scoreVoForRanking.setWinCnt(winCnt);
+			scoreVoForRanking.setDefeatCnt(defeatCnt);
+			rankingInfoList.add(scoreVoForRanking);
+		}
+		
+		for(ScoreVo scoreVo: rankingInfoList) {
+			int rank = 1;
+			int winCnt = scoreVo.getWinCnt();
+			for(ScoreVo scoreVo2: rankingInfoList) {
+				if(winCnt < scoreVo2.getWinCnt()) {
+					rank++;
+				}
+			}
+			scoreVo.setRank(String.valueOf(rank));
+		}
+		
+		Collections.sort(rankingInfoList);
+		//Collections.reverse(rankingInfoList); //역순
+		return rankingInfoList;
 	}
 	
 	

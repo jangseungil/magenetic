@@ -2,17 +2,25 @@
 
 ul, li, ol {list-style-type: none;}
 
+div.mainDiv
+{
+	width:100%;   
+	text-align:center;   
+}
+
 div.maintitle
 {
+	width:400px;
+	margin:0 auto;
 	margin-top:100px;
 	margin-bottom:50px;
-	width:400px;
 	height:80px;
 	background-color:activecaption;
 	border:1px solid black;
 	-moz-box-shadow: 10px 10px 5px #888888; /* Old Firefox */
 	box-shadow: 10px 10px 5px #888888;
 	cursor:pointer;
+	text-align: center;
 }
 
 h1.maintitle
@@ -54,7 +62,6 @@ div.alignCenter
 
 div.subtitle2
 {
-	margin-bottom:50px;
 	width:100px;
 	height:40px;
 	background-color:activecaption;
@@ -71,15 +78,17 @@ div.subtitle2
 	-moz-transition:width 0.5s, height 0.5s, -moz-transform 0.5s; /* Firefox 4 */
 	-webkit-transition:width 0.5s, height 0.5s, -webkit-transform 0.5s; /* Safari and Chrome */
 	-o-transition:width 0.5s, height 0.5s, -o-transform 0.5s; /* Opera */ 
+	margin:0 auto;
+	margin-bottom:50px;
 }
 
 div.subtitle2:hover
 {
-transform:rotate(180deg);
--ms-transform:rotate(180deg); /* ie*/
--moz-transform:rotate(180deg); /* Firefox 4 */
--webkit-transform:rotate(180deg); /* Safari and Chrome */
--o-transform:rotate(180deg); /* Opera */
+transform:rotate(1000deg);
+-ms-transform:rotate(1000deg); /* ie*/
+-moz-transform:rotate(1000deg); /* Firefox 4 */
+-webkit-transform:rotate(1000deg); /* Safari and Chrome */
+-o-transform:rotate(1000deg); /* Opera */
 cursor:pointer;
 }
 
@@ -93,8 +102,9 @@ div.subtitle2 a
 
 input.textScore
 {
-	width: 15px;
+	width: 30px;
 	margin-top: 2px;
+	height: 27px;
 }
 
 
@@ -103,10 +113,16 @@ div.insertDiv
 	margin-top: 20px;
 }
 
+div.insertDiv select, input
+{
+	height: 30px;
+}
+
+
 div.btn1 
 {
-	width:40px;
-	height:20px;
+	width:100px;
+	height:30px;
 	background-color:#ededed;
 	border:1px solid black;
     -moz-border-radius: 3px;  /* Firefox 4 */
@@ -115,7 +131,7 @@ div.btn1
 	text-align:center;
 	vertical-align:middle;
 	cursor:pointer;
-	position:relative;top:-22px; left:185px;
+	position:relative;top:-32px; left:245px;
 }
 
 div.btn1:hover
@@ -207,3 +223,11 @@ a strong{cursor:pointer}
 .selectbox-focused .selectbox-box{border-color:#dddde1 #dddde1 #b2b3b8}
 .selectbox-disabled .selectbox-box{border-color:#dddde1 #dddde1 #b2b3b8}
 
+
+input.submitBtn
+{
+	margin-top:3px;
+	margin-left:10px;
+	width:100px;
+	height:35px;
+}
