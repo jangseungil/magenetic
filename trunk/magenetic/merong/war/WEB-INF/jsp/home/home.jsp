@@ -10,8 +10,8 @@
 		window.location.href = "/home/bookMark";
 	}
 	
-	function goHtml5() {
-		window.location.href = "/home/html5";
+	function goScoreDashBoard() {
+		window.location.href = "/home/scoreDashBoard";
 	}
 </script>
 </head>
@@ -20,7 +20,7 @@
 		<div class="mainDiv">
 			<div class="maintitle"><h1 class="maintitle"></h1></div>
 			<div class="subtitle2" onclick="goBookMark();"><div class="alignCenter">BookMark</div></div>
-			<div class="subtitle2" onclick="goHtml5();"><div class="alignCenter">Score History</div></div>
+			<div class="subtitle2" onclick="goScoreDashBoard();"><div class="alignCenter">Score History</div></div>
 		</div>
 		
 	</form>

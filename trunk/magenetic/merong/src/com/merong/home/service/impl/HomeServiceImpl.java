@@ -40,22 +40,26 @@ public class HomeServiceImpl implements HomeService{
 		c.add(Calendar.HOUR, 9);
 		scoreVo.setDate(c.getTime());
 		
+		int score1= Integer.parseInt(scoreVo.getScore1());
+		int score2= Integer.parseInt(scoreVo.getScore2());
+		
+
 		int i = 0;
 		for(String name : scoreVo.getParamName()) {
 			
 			if(i==0) {
-				if("gubun1".equals(scoreVo.getGubun())) {
+				if(score1 > score2) {
 					scoreVo.setWinner(name);
 					scoreVo.setWinnerScore(scoreVo.getScore1());
-				} else {
+				} else if(score1 < score2) {
 					scoreVo.setLooser(name);
 					scoreVo.setLooserScore(scoreVo.getScore1());
 				}
 			} else {
-				if("gubun2".equals(scoreVo.getGubun())) {
+				if(score2 > score1) {
 					scoreVo.setWinner(name);
 					scoreVo.setWinnerScore(scoreVo.getScore2());
-				} else {
+				} else if(score2 < score1) {
 					scoreVo.setLooser(name);
 					scoreVo.setLooserScore(scoreVo.getScore2());
 				}
@@ -85,7 +89,9 @@ public class HomeServiceImpl implements HomeService{
 		List<String> uniqueWinnerList = new ArrayList<String>(new HashSet<String>(winnerList));
 		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
 	
-		for(String name : uniqueWinnerList) {
+		List<UserVo> userList = homeDaoImpl.selectUserList();
+		for(UserVo userVo : userList) {
+			String name = userVo.getName();
 			int winCnt = 0;
 			int defeatCnt = 0;
 			ScoreVo scoreVoForRanking = new ScoreVo();

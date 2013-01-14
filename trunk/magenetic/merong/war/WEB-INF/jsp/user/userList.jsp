@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 	function back() {
-		window.location.href ="/home/html5";
+		window.location.href ="/home/scoreDashBoard";
 	}
 </script>
 </head>

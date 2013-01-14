@@ -46,19 +46,19 @@ public class HomeController {
 		return "redirect:/home/bookMark";
 	}
 	
-	@RequestMapping(value = "/html5")
-	public String goHtml5(Model model) {
+	@RequestMapping(value = "/scoreDashBoard")
+	public String goscoreDashBoard(Model model) {
 		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList());
 		model.addAttribute("scoreVoList", homeServiceImpl.selectScoreHistoryList());
 		model.addAttribute("userVoList", homeServiceImpl.selectUserList());
-		return "html5/html5";
+		return "scoreDashBoard/scoreDashBoard";
 	}
 	
-	@RequestMapping(value = "/html5/insert", method = RequestMethod.POST)
+	@RequestMapping(value = "/scoreDashBoard/insert", method = RequestMethod.POST)
 	public String insertScore(Model model, ScoreVo scoreVo) {
 		
 		homeServiceImpl.insertScore(scoreVo);
-		return "redirect:/home/html5";
+		return "redirect:/home/scoreDashBoard";
 	}
  
 	

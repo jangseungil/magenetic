@@ -84,11 +84,11 @@ div.subtitle2
 
 div.subtitle2:hover
 {
-transform:rotate(1000deg);
--ms-transform:rotate(1000deg); /* ie*/
--moz-transform:rotate(1000deg); /* Firefox 4 */
--webkit-transform:rotate(1000deg); /* Safari and Chrome */
--o-transform:rotate(1000deg); /* Opera */
+transform:rotate(1095deg);
+-ms-transform:rotate(1095deg); /* ie*/
+-moz-transform:rotate(1095deg); /* Firefox 4 */
+-webkit-transform:rotate(1095deg); /* Safari and Chrome */
+-o-transform:rotate(1095deg); /* Opera */
 cursor:pointer;
 }
 
@@ -105,6 +105,7 @@ input.textScore
 	width: 30px;
 	margin-top: 2px;
 	height: 27px;
+	text-align: right;
 }
 
 input.textUserName
@@ -113,7 +114,6 @@ input.textUserName
 	margin-top: 2px;
 	height: 27px;
 }
-
 
 div.insertDiv
 {
@@ -238,6 +238,7 @@ input.submitBtn
 	width:100px;
 	height:35px;
 }
+
 input.btnR
 {
 	margin-top:3px;
@@ -245,4 +246,26 @@ input.btnR
 	width:100px;
 	height:35px;
 	float:right;
+}
+
+input.smallBtn
+{
+	margin-top:3px;
+	margin-left:0px;
+	width:30px;
+	height:35px;
+}
+
+input.plusImg:active
+{
+	position:relative;
+	-moz-animation:myfirst 5s; /* Firefox */
+	-webkit-animation:myfirst 5s; /* Safari and Chrome */
+	-o-animation:myfirst 5s; /* Opera */
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+	0%   {left:0px; top:0px;}
+	100% {left:0px; top:-500px;}
 }
