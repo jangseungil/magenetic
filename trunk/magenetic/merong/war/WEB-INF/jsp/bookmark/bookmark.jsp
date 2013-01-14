@@ -24,19 +24,22 @@
 					</td>
 					<td>
 						<input type="text" name="content" size="40"/>
+	
+					</td>
+					<td>
+						<input class="btnR" type="submit" value="보내기"/>
 					</td>
 				</tr>
 			</table>
-			<input type="submit" value="보내기"/>
 		</form>
 
 
         
    	<table cellspacing="0" border="1" class="tb_lstsrch">
 	    <colgroup>
-		    <col width="33">
-		    <col width="33">
-		    <col width="40">
+		    <col width="10%">
+		    <col width="70%">
+		    <col width="20%">
 	    </colgroup>
 	    <thead>
 		    <tr>

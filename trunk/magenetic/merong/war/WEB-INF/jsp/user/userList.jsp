@@ -10,6 +10,14 @@
 	function back() {
 		window.location.href ="/home/scoreDashBoard";
 	}
+	
+	function deleteUsr(url) {
+		if(confirm("삭제 콜?")){
+			window.location.href = url;
+		}else{
+			return ;
+		}
+	}
 </script>
 </head>
 <body>
@@ -26,13 +34,15 @@
 
 	<table cellspacing="0" border="1" class="tb_lstsrch">
 	    <colgroup>
-		    <col width="33">
-		    <col width="33">
+		    <col width="30%">
+		    <col width="60%">
+		    <col width="10%">
 	    </colgroup>
 	    <thead>
 		    <tr>
 		    <th scope="col" class="td_type">name</th>
 		    <th scope="col" class="td_type">date</th>
+		    <th scope="col" class="td_type">delete</th>
 		    </tr>
 	    </thead>
 	 	<tbody>
@@ -49,10 +59,13 @@
 	 	
 			<tr class="${trClassNm}">
 		    	<td class="td_type">
-		    		<a href="/home/user/delete/${userVo.name}">${userVo.name }</a>
+		    		${userVo.name }
 			    </td>
 		    	<td class="td_type">
 					<fmt:formatDate value="${userVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
+				</td>
+				<td class="td_typeC">
+					<a href="#" onclick="deleteUsr('/home/user/delete/${userVo.name}');"><img src="${pageContext.request.contextPath}/images/delete.png" width="20px"/></a>
 				</td>
 		    </tr>
 	 	</c:forEach>
