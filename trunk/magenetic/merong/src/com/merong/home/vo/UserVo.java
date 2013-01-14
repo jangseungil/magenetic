@@ -6,6 +6,10 @@ public class UserVo {
 	private String name;
 	
 	private Date date;
+	
+	private String id;
+	
+	private String passWord;
 
 	public String getName() {
 		return name;
@@ -21,5 +25,21 @@ public class UserVo {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
