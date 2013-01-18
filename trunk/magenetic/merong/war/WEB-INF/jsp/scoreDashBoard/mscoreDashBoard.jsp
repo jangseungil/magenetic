@@ -17,11 +17,11 @@
 	}
 	
 	function userAdd() {
-		window.location.href = "/home/user";
+		window.location.href = "/m/home/user";
 	}
 	
 	function back() {
-		//window.location.href ="/home";
+		window.location.href ="/m/home";
 	}
 	
 	function send() {
@@ -70,16 +70,16 @@
 	}
 	
 	function login() {
-		window.location.href = "/login";
+		window.location.href = "/m/login";
 	}
 	
 	function logout() {
-		window.location.href = "/login/logout";
+		window.location.href = "/m/login/logout";
 	}
 </script>
 </head>
 <body>
-	<form action="/home/scoreDashBoard/insert" id="insertForm" method="post">
+	<form action="/m/home/scoreDashBoard/insert" id="insertForm" method="post">
 		<c:if test="${loginResult == 'success'}">
 		<div class="insertDiv">
 			<select name="paramName" id="paramName1">
@@ -111,6 +111,7 @@
 					<input class="btnR" type="button" value="logout" onclick="logout()"/>
 				</c:when>
 				<c:otherwise>
+					<input class="btnR" type="button" value="back" onclick="back()"/>
 					<input class="btnR" type="button" value="login" onclick="login()"/>
 				</c:otherwise>
 			</c:choose>
@@ -138,16 +139,16 @@
 	 	
 	 	
 			<tr class="${trClassNm}">
-		    	<td class="td_type">
+		    	<td class="mtd_type">
 		    		${rankingInfo.rank }
 			    </td>
-		    	<td class="td_type">
+		    	<td class="mtd_type">
 					${rankingInfo.name }
 				</td>
-				<td class="td_type">
+				<td class="mtd_type">
 					${rankingInfo.winCnt }
 				</td>
-				<td class="td_type">
+				<td class="mtd_type">
 					${rankingInfo.defeatCnt }
 				</td>
 		    </tr>
@@ -186,16 +187,16 @@
 				</c:choose>
 
 				<tr class="${trClassNm}">
-			    	<td class="td_type">
+			    	<td class="mtd_type">
 			    		${scoreVo.winner }
 				    </td>
-					<td class="td_typeC">
+					<td class="mtd_typeC">
 						${scoreVo.winnerScore } : ${scoreVo.looserScore }
 					</td>
-			    	<td class="td_typeL">
+			    	<td class="mtd_typeL">
 						${scoreVo.looser }
 					</td>
-					<td class="td_typeC">
+					<td class="mtd_typeC">
 						<fmt:formatDate value="${scoreVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
 					</td>
 			    </tr>

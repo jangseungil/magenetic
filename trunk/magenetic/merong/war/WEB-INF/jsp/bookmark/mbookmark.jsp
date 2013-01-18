@@ -10,7 +10,7 @@
 </script>
 </head>
 <body>
-	<form action="/home/insert" method="post">
+	<form action="/m/home/insert" method="post">
 		<div class="insertDiv">
 			name<input type="text" name="name"/>
 			content<input type="text" name="content" size="25"/>
@@ -43,13 +43,13 @@
 					</c:otherwise>
 				</c:choose>
 				<tr class="${trClassNm}">
-			    	<td class="td_type">
+			    	<td class="mtd_type">
 			    		<c:out value="${homeVo.name}"/>
 				    </td>
-			    	<td class="td_type">
+			    	<td class="mtd_type">
 							<c:out value="${homeVo.content}"/>
 					</td>
-					<td class="td_type">
+					<td class="mtd_type">
 						<fmt:formatDate value="${homeVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
 					</td>
 			    </tr>

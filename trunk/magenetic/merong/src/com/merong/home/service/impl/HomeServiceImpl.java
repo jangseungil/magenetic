@@ -86,7 +86,6 @@ public class HomeServiceImpl implements HomeService{
 			winnerList.add(scoreVo.getLooser());
 		}
 		
-		List<String> uniqueWinnerList = new ArrayList<String>(new HashSet<String>(winnerList));
 		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
 	
 		List<UserVo> userList = homeDaoImpl.selectUserList();
