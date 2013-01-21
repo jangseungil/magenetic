@@ -79,104 +79,70 @@
 </script>
 </head>
 <body>
-	<form action="/home/scoreDashBoard/insert" id="insertForm" method="post">
-		<c:if test="${loginResult == 'success'}">
-		<div class="insertDiv">
-			<select name="paramName" id="paramName1">
-				<c:forEach var="userVo" items="${userVoList}" varStatus="status">
-					<option>${userVo.name}</option>
-				</c:forEach>
-			</select>
-			<input class="textScore" name="score1" id="score1" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
-			<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore1(); return false;"/>
-			vs
-			<select name="paramName" id="paramName2">
-				<c:forEach var="userVo" items="${userVoList}" varStatus="status">
-					<option>${userVo.name}</option>
-				</c:forEach>
-			</select>
-			<input class="textScore" name="score2" id="score2" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
-			<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore2(); return false;"/>
-		</div>
-		</c:if>
-			<c:if test="${loginResult == 'success'}">
-				<input class="btnL" type="button" value="send" onclick="send();"/>
-			</c:if>
-			<c:if test="${loginResult == 'success'}">
-				<input class="btnR" type="button" value="userAdd" onclick="userAdd()"/>
-			</c:if>
-			
-			<c:choose>
-				<c:when test="${loginResult == 'success'}">
-					<input class="btnR" type="button" value="logout" onclick="logout()"/>
-				</c:when>
-				<c:otherwise>
-					<input class="btnR" type="button" value="login" onclick="login()"/>
-				</c:otherwise>
-			</c:choose>
-				
-	</form>
+	<!-- top -->
+	<jsp:include page="/WEB-INF/jsp/common/top.jsp"></jsp:include>
+	<!-- //top -->	
 	
-	<h3>ranking</h3>
-	<table cellspacing="0" border="1" class="tb_lstsrch">
-	    <colgroup>
-		    <col width="33">
-		    <col width="33">
-		    <col width="35">
-		    <col width="40">
-	    </colgroup>
-	    <thead>
-		    <tr>
-		    <th scope="col" class="td_type">rank</th>
-		    <th scope="col" class="td_type">name</th>
-		    <th scope="col" class="td_type">win</th>
-		    <th scope="col" class="td_type">defeat</th>
-		    </tr>
-	    </thead>
-	 	<tbody>
-	 	<c:forEach var="rankingInfo" items="${rankingInfoList}" varStatus="status">
-	 	
-	 	
-			<tr class="${trClassNm}">
-		    	<td class="td_type">
-		    		${rankingInfo.rank }
-			    </td>
-		    	<td class="td_type">
-					${rankingInfo.name }
-				</td>
-				<td class="td_type">
-					${rankingInfo.winCnt }
-				</td>
-				<td class="td_type">
-					${rankingInfo.defeatCnt }
-				</td>
-		    </tr>
-	 	</c:forEach>
-	    </tbody>
-    </table>
-    
-    
-	<h3>history</h3>
-
-	<table cellspacing="0" border="1" class="tb_lstsrch">
-	    <colgroup>
-		    <col width="33">
-		    <col width="33">
-		    <col width="35">
-		    <col width="40">
-	    </colgroup>
-	    <thead>
-		    <tr>
-		    <th scope="col" class="td_type">winner</th>
-		    <th scope="col" class="td_type">score</th>
-		    <th scope="col" class="td_type">looser</th>
-		    <th scope="col" class="td_type">date</th>
-		    </tr>
-	    </thead>
-	 	<tbody>
-	 		<c:set var="trClassNm" value=""/>
-			<c:forEach var="scoreVo" items="${scoreVoList}" varStatus="status">
+	<!-- container -->
+	<div class="container">
+		<form action="/home/scoreDashBoard/insert" id="insertForm" method="post">
+			<c:if test="${loginResult == 'success'}">
+			<div class="insertDiv">
+				<select name="paramName" id="paramName1">
+					<c:forEach var="userVo" items="${userVoList}" varStatus="status">
+						<option>${userVo.name}</option>
+					</c:forEach>
+				</select>
+				<input class="textScore" name="score1" id="score1" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
+				<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore1(); return false;"/>
+				vs
+				<select name="paramName" id="paramName2">
+					<c:forEach var="userVo" items="${userVoList}" varStatus="status">
+						<option>${userVo.name}</option>
+					</c:forEach>
+				</select>
+				<input class="textScore" name="score2" id="score2" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
+				<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore2(); return false;"/>
+		
+			</c:if>
+				<c:if test="${loginResult == 'success'}">
+					<input class="btnL" type="button" value="send" onclick="send();"/>
+				</c:if>
+				<c:if test="${loginResult == 'success'}">
+					<input class="btnR" type="button" value="userAdd" onclick="userAdd()"/>
+				</c:if>
+				
 				<c:choose>
+					<c:when test="${loginResult == 'success'}">
+						<input class="btnR" type="button" value="logout" onclick="logout()"/>
+					</c:when>
+					<c:otherwise>
+						<input class="btnR" type="button" value="login" onclick="login()"/>
+					</c:otherwise>
+				</c:choose>
+			</div>	
+		</form>
+		
+		<h3>ranking</h3>
+		<table cellspacing="0" border="1" class="tb_lstsrch">
+		    <colgroup>
+			    <col width="33">
+			    <col width="33">
+			    <col width="35">
+			    <col width="40">
+		    </colgroup>
+		    <thead>
+			    <tr>
+			    <th scope="col" class="td_type">rank</th>
+			    <th scope="col" class="td_type">name</th>
+			    <th scope="col" class="td_type">win</th>
+			    <th scope="col" class="td_type">defeat</th>
+			    </tr>
+		    </thead>
+		 	<tbody>
+		 	<c:set var="trClassNm" value=""/>
+		 	<c:forEach var="rankingInfo" items="${rankingInfoList}" varStatus="status">
+	 			<c:choose>
 					<c:when test="${status.index == 0}">
 						<c:set var="trClassNm" value="frst"/>
 					</c:when>
@@ -184,24 +150,76 @@
 						<c:set var="trClassNm" value=""/>
 					</c:otherwise>
 				</c:choose>
-
+		 	
 				<tr class="${trClassNm}">
 			    	<td class="td_type">
-			    		${scoreVo.winner }
+			    		${rankingInfo.rank }
 				    </td>
-					<td class="td_typeC">
-						${scoreVo.winnerScore } : ${scoreVo.looserScore }
+			    	<td class="td_type">
+						${rankingInfo.name }
 					</td>
-			    	<td class="td_typeL">
-						${scoreVo.looser }
+					<td class="td_type">
+						${rankingInfo.winCnt }
 					</td>
-					<td class="td_typeC">
-						<fmt:formatDate value="${scoreVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
+					<td class="td_type">
+						${rankingInfo.defeatCnt }
 					</td>
 			    </tr>
-			</c:forEach>
-	    </tbody>
-    </table>
+		 	</c:forEach>
+		    </tbody>
+	    </table>
+	    
+	    
+		<h3>history</h3>
 	
+		<table cellspacing="0" border="1" class="tb_lstsrch">
+		    <colgroup>
+			    <col width="33">
+			    <col width="33">
+			    <col width="35">
+			    <col width="40">
+		    </colgroup>
+		    <thead>
+			    <tr>
+			    <th scope="col" class="td_type">winner</th>
+			    <th scope="col" class="td_type">score</th>
+			    <th scope="col" class="td_type">looser</th>
+			    <th scope="col" class="td_type">date</th>
+			    </tr>
+		    </thead>
+		 	<tbody>
+		 		<c:set var="trClassNm" value=""/>
+				<c:forEach var="scoreVo" items="${scoreVoList}" varStatus="status">
+					<c:choose>
+						<c:when test="${status.index == 0}">
+							<c:set var="trClassNm" value="frst"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="trClassNm" value=""/>
+						</c:otherwise>
+					</c:choose>
+	
+					<tr class="${trClassNm}">
+				    	<td class="td_type">
+				    		${scoreVo.winner }
+					    </td>
+						<td class="td_typeC">
+							${scoreVo.winnerScore } : ${scoreVo.looserScore }
+						</td>
+				    	<td class="td_typeL">
+							${scoreVo.looser }
+						</td>
+						<td class="td_typeC">
+							<fmt:formatDate value="${scoreVo.date }" pattern="yyyy-MM-dd hh:mm:ss"/>
+						</td>
+				    </tr>
+				</c:forEach>
+		    </tbody>
+	    </table>
+	</div>
+	
+	<!-- footer -->
+	<jsp:include page="/WEB-INF/jsp/common/footer.jsp"></jsp:include>
+	<!-- //footer -->	
 </body>
 </html>
