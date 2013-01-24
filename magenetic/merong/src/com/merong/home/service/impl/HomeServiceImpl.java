@@ -3,7 +3,7 @@ package com.merong.home.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import com.merong.home.dao.impl.HomeDaoImpl;
 import com.merong.home.service.HomeService;
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.SortVo;
 import com.merong.home.vo.UserVo;
 
 @Service
@@ -21,10 +22,10 @@ public class HomeServiceImpl implements HomeService{
 	private HomeDaoImpl homeDaoImpl;
 	
 	@Override
-	public List<HomeVo> selectBookMarkList() {
-		return homeDaoImpl.selectBookMarkList();
-	}
-	
+	public List<HomeVo> selectBookMarkList(SortVo sortVo) {
+		return homeDaoImpl.selectBookMarkList(sortVo);
+	} 
+	 
 	@Override
 	public void insertBookMark(HomeVo homeVo) {
 		Calendar c = Calendar.getInstance();
@@ -71,13 +72,13 @@ public class HomeServiceImpl implements HomeService{
 	}
 
 	@Override
-	public List<ScoreVo> selectScoreHistoryList() {
-		return homeDaoImpl.selectScoreHistoryList();
+	public List<ScoreVo> selectScoreHistoryList(SortVo sortVo) {
+		return homeDaoImpl.selectScoreHistoryList(sortVo);
 	}
 
 	@Override
-	public List<ScoreVo> selectRankingList() {
-		List<ScoreVo> scoreVoList =  homeDaoImpl.selectScoreHistoryList();
+	public List<ScoreVo> selectRankingList(SortVo sortVo) {
+		List<ScoreVo> scoreVoList =  homeDaoImpl.selectScoreHistoryList(sortVo);
 		
 		List<String> winnerList = new ArrayList<String>();
 		
@@ -88,24 +89,34 @@ public class HomeServiceImpl implements HomeService{
 		
 		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
 	
-		List<UserVo> userList = homeDaoImpl.selectUserList();
+		List<UserVo> userList = homeDaoImpl.selectUserList(sortVo);
 		for(UserVo userVo : userList) {
 			String name = userVo.getName();
 			int winCnt = 0;
 			int defeatCnt = 0;
+			int goalCnt = 0;
 			ScoreVo scoreVoForRanking = new ScoreVo();
 		
 			for(ScoreVo scoreVo: scoreVoList) {
 				if(name.equals(scoreVo.getWinner())) {
 					winCnt++;
+					if(scoreVo.getWinnerScore() != null && !"".equals(scoreVo.getWinnerScore())) {
+						goalCnt += Integer.parseInt(scoreVo.getWinnerScore());
+					}
 				}
 				if(name.equals(scoreVo.getLooser())) {
 					defeatCnt++;
+					if(scoreVo.getLooserScore() != null && !"".equals(scoreVo.getLooserScore())) {
+						goalCnt += Integer.parseInt(scoreVo.getLooserScore());
+					}
 				}
+				
+				
 			}
 			scoreVoForRanking.setName(name);
 			scoreVoForRanking.setWinCnt(winCnt);
 			scoreVoForRanking.setDefeatCnt(defeatCnt);
+			scoreVoForRanking.setTotalGoalCnt(goalCnt);
 			rankingInfoList.add(scoreVoForRanking);
 		}
 		
@@ -134,14 +145,76 @@ public class HomeServiceImpl implements HomeService{
 	}
 
 	@Override
-	public List<UserVo> selectUserList() {
-		return homeDaoImpl.selectUserList();
+	public List<UserVo> selectUserList(SortVo sortVo) {
+		return homeDaoImpl.selectUserList(sortVo);
 	}
 
 	@Override
 	public void deleteUser(UserVo userVo) {
 		homeDaoImpl.deleteUser(userVo);
 		
+	}
+	
+	@Override
+	public List<ScoreVo> selectChartByDate(SortVo sortVo) {
+		List<ScoreVo> scoreVoList =  homeDaoImpl.selectScoreHistoryList(sortVo);
+		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
+	
+		List<UserVo> userList = homeDaoImpl.selectUserList(sortVo);
+		for(UserVo userVo : userList) {
+			String name = userVo.getName();
+			int winCnt = 0;
+			int defeatCnt = 0;
+			int goalCnt = 0;
+			ScoreVo scoreVoForRanking = new ScoreVo();
+		
+			for(ScoreVo scoreVo: scoreVoList) {
+				
+				Date scoreDate = scoreVo.getDate();
+				//System.out.println(scoreDate.getTime()/1000/60/60/24/365);
+				
+				long day = scoreDate.getTime()/1000/60/60/24;
+				//System.out.println(day + " : " + name);
+				
+				
+				if(name.equals(scoreVo.getWinner())) {
+					winCnt++;
+					if(scoreVo.getWinnerScore() != null && !"".equals(scoreVo.getWinnerScore())) {
+						goalCnt += Integer.parseInt(scoreVo.getWinnerScore());
+					}
+					
+					
+				}
+				if(name.equals(scoreVo.getLooser())) {
+					defeatCnt++;
+					if(scoreVo.getLooserScore() != null && !"".equals(scoreVo.getLooserScore())) {
+						goalCnt += Integer.parseInt(scoreVo.getLooserScore());
+					}
+				}
+				
+				
+			}
+			scoreVoForRanking.setName(name);
+			scoreVoForRanking.setWinCnt(winCnt);
+			scoreVoForRanking.setDefeatCnt(defeatCnt);
+			scoreVoForRanking.setTotalGoalCnt(goalCnt);
+			rankingInfoList.add(scoreVoForRanking);
+		}
+		
+		for(ScoreVo scoreVo: rankingInfoList) {
+			int rank = 1;
+			int winCnt = scoreVo.getWinCnt();
+			for(ScoreVo scoreVo2: rankingInfoList) {
+				if(winCnt < scoreVo2.getWinCnt()) {
+					rank++;
+				}
+			}
+			scoreVo.setRank(String.valueOf(rank));
+		}
+		
+		Collections.sort(rankingInfoList);
+		//Collections.reverse(rankingInfoList); //역순
+		return rankingInfoList;
 	}
 	
 }

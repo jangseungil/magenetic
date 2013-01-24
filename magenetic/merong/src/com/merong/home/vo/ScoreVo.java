@@ -32,6 +32,8 @@ public class ScoreVo implements Comparable<ScoreVo>{
 	
 	private String score2;
 	
+	private int totalGoalCnt;
+	
 	public String getRank() {
 		return rank;
 	}
@@ -148,6 +150,14 @@ public class ScoreVo implements Comparable<ScoreVo>{
 	public int compareTo(ScoreVo o) {
 		return rank.compareTo(o.getRank());
 	
+	}
+
+	public int getTotalGoalCnt() {
+		return totalGoalCnt;
+	}
+
+	public void setTotalGoalCnt(int totalGoalCnt) {
+		this.totalGoalCnt = totalGoalCnt;
 	}
 
 }

@@ -24,8 +24,8 @@
 	<form action="/home/user/insert" id="insertForm" method="post">
 		<div class="insertDiv">
 			<strong>name</strong>
-			<input class="textUserName" name="name" type="text" maxlength="8">
-			<input class="submitBtn" type="submit" value="add"/>
+			<input class="text1" name="name" type="text" maxlength="8">
+			<input class="btnL" type="submit" value="add"/>
 			<input class="btnR" type="button" value="back" onclick="back();"/>
 		</div>
 	</form>

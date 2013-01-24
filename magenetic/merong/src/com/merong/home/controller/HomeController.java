@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.appengine.api.datastore.Query;
 import com.merong.home.service.impl.HomeServiceImpl;
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.SortVo;
 import com.merong.home.vo.UserVo;
 
 @Controller
@@ -24,13 +26,13 @@ public class HomeController {
  
 	@RequestMapping({"", "/list" })
 	public String goHome(Model model) {
-		model.addAttribute("HomeVoList", homeServiceImpl.selectBookMarkList());
+		model.addAttribute("HomeVoList", homeServiceImpl.selectBookMarkList(new SortVo(Query.SortDirection.DESCENDING)));
 		return "home/home";
 	}
 	
 	@RequestMapping(value = "/bookMark")
 	public String getBookMarkList(Model model) {
-		model.addAttribute("HomeVoList", homeServiceImpl.selectBookMarkList());
+		model.addAttribute("HomeVoList", homeServiceImpl.selectBookMarkList(new SortVo(Query.SortDirection.DESCENDING)));
 		return "bookmark/bookmark";
 	}
  
@@ -48,9 +50,9 @@ public class HomeController {
 	
 	@RequestMapping(value = "/scoreDashBoard")
 	public String goscoreDashBoard(Model model) {
-		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList());
-		model.addAttribute("scoreVoList", homeServiceImpl.selectScoreHistoryList());
-		model.addAttribute("userVoList", homeServiceImpl.selectUserList());
+		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList(new SortVo(Query.SortDirection.DESCENDING)));
+		model.addAttribute("scoreVoList", homeServiceImpl.selectScoreHistoryList(new SortVo(Query.SortDirection.DESCENDING)));
+		model.addAttribute("userVoList", homeServiceImpl.selectUserList(new SortVo(Query.SortDirection.DESCENDING)));
 		return "scoreDashBoard/scoreDashBoard";
 	}
 	
@@ -65,7 +67,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/user")
 	public String selectUserList(Model model, UserVo userVo) {
-		model.addAttribute("userVoList", homeServiceImpl.selectUserList());
+		model.addAttribute("userVoList", homeServiceImpl.selectUserList(new SortVo(Query.SortDirection.DESCENDING)));
 		return "user/userList";
 	}
 	
@@ -83,10 +85,16 @@ public class HomeController {
 	}
 	
 	
-	
 	@RequestMapping(value = "/catchMeIfYouCan")
 	public String catchIfYouCan(Model model, UserVo userVo) {
 		return "redirect:/home";
+	}
+	
+	@RequestMapping(value = "/graph")
+	public String selectGraph(Model model) {
+		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList(new SortVo(Query.SortDirection.DESCENDING)));
+		model.addAttribute("rankingInfoList", homeServiceImpl.selectChartByDate(new SortVo(Query.SortDirection.ASCENDING)));
+		return "graph/graph";
 	}
 
 	

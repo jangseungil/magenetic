@@ -19,9 +19,9 @@
 	
 		<form action="/home/insert" method="post">
 			<div class="insertDiv">
-				name<input type="text" name="name"/>
-				content<input type="text" name="content" size="25"/>
-			<input class="btnL" type="submit" value="보내기"/>
+				name<input class="text1" type="text" name="name"/>
+				content<input class="text2" type="text" name="content" size="25"/>
+				<input class="btnL" type="submit" value="send"/>
 			</div>
 		</form>
 	        
