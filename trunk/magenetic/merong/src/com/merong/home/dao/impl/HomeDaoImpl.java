@@ -18,16 +18,17 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.merong.home.dao.HomeDao;
 import com.merong.home.vo.HomeVo;
 import com.merong.home.vo.ScoreVo;
+import com.merong.home.vo.SortVo;
 import com.merong.home.vo.UserVo;
 
 @Repository
 public class HomeDaoImpl implements HomeDao{
 
 	@Override
-	public List<HomeVo> selectBookMarkList() {
+	public List<HomeVo> selectBookMarkList(SortVo sortVo) {
 	
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    Query query = new Query("TN_BOOKMARK").addSort("date", Query.SortDirection.DESCENDING);
+	    Query query = new Query("TN_BOOKMARK").addSort("date", sortVo.getSortDirection());
 	    
 	    List<Entity> bookMarks = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
         List<HomeVo> homeVoList = new ArrayList<HomeVo>();
@@ -57,11 +58,11 @@ public class HomeDaoImpl implements HomeDao{
 	}
 
 	@Override
-	public List<ScoreVo> selectScoreHistoryList() {
+	public List<ScoreVo> selectScoreHistoryList(SortVo sortVo) {
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    Query query = new Query("TN_SCORE").addSort("date", Query.SortDirection.DESCENDING);
+	    Query query = new Query("TN_SCORE").addSort("date", sortVo.getSortDirection());
 	    
-	    List<Entity> scoreHistorys = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
+	    List<Entity> scoreHistorys = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(9999));
         List<ScoreVo> scoreVoList = new ArrayList<ScoreVo>();
         
         for (Entity scoreHistory : scoreHistorys) {
@@ -104,9 +105,9 @@ public class HomeDaoImpl implements HomeDao{
 	}
 	
 	@Override
-	public List<UserVo> selectUserList() {
+	public List<UserVo> selectUserList(SortVo sortVo) {
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    Query query = new Query("TN_USER").addSort("date", Query.SortDirection.DESCENDING);
+	    Query query = new Query("TN_USER").addSort("date", sortVo.getSortDirection());
 	    
 	    List<Entity> userLists = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(30));
         List<UserVo> userVoList = new ArrayList<UserVo>();

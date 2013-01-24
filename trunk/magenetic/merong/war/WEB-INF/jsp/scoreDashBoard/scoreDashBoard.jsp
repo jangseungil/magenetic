@@ -94,7 +94,7 @@
 					</c:forEach>
 				</select>
 				<input class="textScore" name="score1" id="score1" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
-				<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore1(); return false;"/>
+				<a href="#addScore" onclick="javascript:addScore1();"><button type="button" class="css3button2">+</button></a>
 				vs
 				<select name="paramName" id="paramName2">
 					<c:forEach var="userVo" items="${userVoList}" varStatus="status">
@@ -102,8 +102,9 @@
 					</c:forEach>
 				</select>
 				<input class="textScore" name="score2" id="score2" value="0" type="text" maxlength="2" style='IME-MODE: disabled' onKeyDown = "javascript:onlyNumberInput()">
-				<input class="plusImg" type="image" src="${pageContext.request.contextPath}/images/plusbtn1.jpg" onclick="javascript:addScore2(); return false;"/>
-		
+				<a href="#addScore2" onclick="javascript:addScore2();"><button type="button" class="css3button2">+</button></a>
+			
+		 	</div>
 			</c:if>
 				<c:if test="${loginResult == 'success'}">
 					<input class="btnL" type="button" value="send" onclick="send();"/>
@@ -120,9 +121,8 @@
 						<input class="btnR" type="button" value="login" onclick="login()"/>
 					</c:otherwise>
 				</c:choose>
-			</div>	
-		</form>
 		
+		</form>
 		<h3>ranking</h3>
 		<table cellspacing="0" border="1" class="tb_lstsrch">
 		    <colgroup>
