@@ -127,8 +127,46 @@
 			]
 		});
 
+		
+		Morris.Bar({
+			  element: 'lostScoreChartBar',
+			  data: [
+						{ y: '다실점', 
+							<c:forEach var="rankingInfo" items="${rankingInfoList}" varStatus="status">
+									'${rankingInfo.name }': '${rankingInfo.lostGoalCnt }'	
+									<c:if test="${status.index != fn:length(rankingInfoList)}">
+									  ,
+					        		</c:if>
+							</c:forEach>
+						}
+			  ],
+			  xkey: 'y',
+			  ykeys: [
+						<c:forEach var="rankingInfo" items="${rankingInfoList}" varStatus="status">
+							'${rankingInfo.name }'
+						
+							<c:if test="${status.index != fn:length(rankingInfoList)}">
+							  ,
+							</c:if>
+						</c:forEach>
+			          ],
+			  
+			  labels: [
+						<c:forEach var="rankingInfo" items="${rankingInfoList}" varStatus="status">
+							'${rankingInfo.name }'
+							
+							<c:if test="${status.index != fn:length(rankingInfoList)}">
+							  ,
+							</c:if>
+						</c:forEach>
+			           ]
+		});
+		
+		
 		$("#scoreChartBar").hide();     
 		$("#scoreChartDonut").hide();    
+		$("#lostScoreChartBar").hide();    
+		
 		
 	});
 	
@@ -137,15 +175,24 @@
 	}
 	
 	function goManyVictory() {
-		$("#winCntChartBar").show();     
 		$("#scoreChartBar").hide();     
 		$("#scoreChartDonut").hide();     
+		$("#lostScoreChartBar").hide();   
+		$("#winCntChartBar").show();     
 	}
 	
 	function goManyGoal() {
 		$("#winCntChartBar").hide();     
 		$("#scoreChartBar").show();     
+		$("#lostScoreChartBar").hide();   
 		$("#scoreChartDonut").show();     
+	}
+	
+	function goManyLostGoal() {
+		$("#winCntChartBar").hide();     
+		$("#scoreChartBar").hide();     
+		$("#scoreChartDonut").hide();     
+		$("#lostScoreChartBar").show();     
 	}
 	
 </script>
@@ -157,8 +204,9 @@
 	
 	<!-- container -->
 	<div class="container">
-		<a href="#" class="second" onclick="goManyVictory();"><button type="button" class="css3button">1</button></a>
-		<a href="#" class="second" onclick="goManyGoal();"><button type="button" class="css3button">2</button></a>
+		<a href="#" class="second" onclick="goManyVictory();"><button type="button" class="css3button">다승</button></a>
+		<a href="#" class="second" onclick="goManyGoal();"><button type="button" class="css3button">다득점</button></a>
+		<a href="#" class="second" onclick="goManyLostGoal();"><button type="button" class="css3button">다실점</button></a>
 		<div id="winCntChartBar" class="chart" style="color: white">
 		</div>
 		
@@ -169,6 +217,9 @@
 		</div>
 		
 		<div id="scoreChartDonut" class="chart" style="color: white">
+		</div>
+		
+		<div id="lostScoreChartBar" class="chart" style="color: white">
 		</div>
 	</div>
 	<!-- //container -->	

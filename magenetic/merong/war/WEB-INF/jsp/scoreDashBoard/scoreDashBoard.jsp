@@ -129,14 +129,12 @@
 			    <col width="33">
 			    <col width="33">
 			    <col width="35">
-			    <col width="40">
 		    </colgroup>
 		    <thead>
 			    <tr>
 			    <th scope="col" class="td_type">rank</th>
 			    <th scope="col" class="td_type">name</th>
-			    <th scope="col" class="td_type">win</th>
-			    <th scope="col" class="td_type">defeat</th>
+			    <th scope="col" class="td_type">win/defeat(rate)</th>
 			    </tr>
 		    </thead>
 		 	<tbody>
@@ -159,10 +157,9 @@
 						${rankingInfo.name }
 					</td>
 					<td class="td_type">
-						${rankingInfo.winCnt }
-					</td>
-					<td class="td_type">
-						${rankingInfo.defeatCnt }
+						${rankingInfo.winCnt } / ${rankingInfo.defeatCnt }
+						(<fmt:formatNumber maxFractionDigits="0" value="${rankingInfo.winCnt / (rankingInfo.defeatCnt + rankingInfo.winCnt) * 100 }"></fmt:formatNumber>%)
+						
 					</td>
 			    </tr>
 		 	</c:forEach>
