@@ -95,28 +95,29 @@ public class HomeServiceImpl implements HomeService{
 			int winCnt = 0;
 			int defeatCnt = 0;
 			int goalCnt = 0;
+			int lostGoalCnt = 0;
 			ScoreVo scoreVoForRanking = new ScoreVo();
 		
 			for(ScoreVo scoreVo: scoreVoList) {
 				if(name.equals(scoreVo.getWinner())) {
 					winCnt++;
-					if(scoreVo.getWinnerScore() != null && !"".equals(scoreVo.getWinnerScore())) {
-						goalCnt += Integer.parseInt(scoreVo.getWinnerScore());
-					}
+					goalCnt += Integer.parseInt(scoreVo.getWinnerScore());
+					lostGoalCnt += Integer.parseInt(scoreVo.getLooserScore());
 				}
 				if(name.equals(scoreVo.getLooser())) {
 					defeatCnt++;
-					if(scoreVo.getLooserScore() != null && !"".equals(scoreVo.getLooserScore())) {
-						goalCnt += Integer.parseInt(scoreVo.getLooserScore());
-					}
+					goalCnt += Integer.parseInt(scoreVo.getLooserScore());
+					lostGoalCnt += Integer.parseInt(scoreVo.getWinnerScore());
 				}
 				
 				
 			}
+			
 			scoreVoForRanking.setName(name);
 			scoreVoForRanking.setWinCnt(winCnt);
 			scoreVoForRanking.setDefeatCnt(defeatCnt);
 			scoreVoForRanking.setTotalGoalCnt(goalCnt);
+			scoreVoForRanking.setLostGoalCnt(lostGoalCnt);
 			rankingInfoList.add(scoreVoForRanking);
 		}
 		
@@ -159,61 +160,112 @@ public class HomeServiceImpl implements HomeService{
 	public List<ScoreVo> selectChartByDate(SortVo sortVo) {
 		List<ScoreVo> scoreVoList =  homeDaoImpl.selectScoreHistoryList(sortVo);
 		List<ScoreVo> rankingInfoList = new ArrayList<ScoreVo>();
-	
+		
+		long maxDay = 0l;
+		long minDay = 0l;
+		long beforeDay = 99999l;	
+		for(ScoreVo scoreVo: scoreVoList) {
+			Date scoreDate = scoreVo.getDate();
+			long nextDay = scoreDate.getTime()/1000/60/60/24;
+			if(nextDay > beforeDay) {
+				maxDay = nextDay;
+			}
+			if(beforeDay > nextDay ) {
+				minDay = nextDay;
+			}
+			beforeDay = nextDay;
+		}
+		
+		//System.out.println(maxDay);
+		//System.out.println(minDay);
+		long gapDay = (maxDay-minDay)/5;
+		//System.out.println(gapDay);
+		
+		int fromDay = 0;
+		int toDay = (int) minDay;
+		int temDay =(int) minDay;
+		
+		int k=0;
+		for(int i=0; temDay <= maxDay; i++){
+			
+			toDay = temDay ;
+			System.out.println(toDay);
+			temDay = (int) (temDay + gapDay-1);
+			fromDay = temDay;
+			System.out.println(fromDay);
+			
+			
+			
+			k++;
+			if(k>999) {
+				break;
+			}
+		}
+		
 		List<UserVo> userList = homeDaoImpl.selectUserList(sortVo);
+		
+		int winCnt = 0;
+		
+		ScoreVo scoreVoForRanking = new ScoreVo();
+		for(ScoreVo scoreVo: scoreVoList) {
+			
+			Date scoreDate = scoreVo.getDate();
+			long days = scoreDate.getTime()/1000/60/60/24;
+			
+		
+			if(days>=15718 && days<=15720){
+				for(UserVo userVo : userList) {
+					String name = userVo.getName();
+					if(name.equals(scoreVo.getWinner())) {
+						
+							//System.out.println(scoreVo.getWinner() + "  |  " +  scoreVo.getDate() + "     |    " + days);
+							winCnt++;
+							
+					}
+					if(name.equals(scoreVo.getLooser())) {
+						
+					}
+
+				}
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+	
 		for(UserVo userVo : userList) {
 			String name = userVo.getName();
-			int winCnt = 0;
-			int defeatCnt = 0;
-			int goalCnt = 0;
-			ScoreVo scoreVoForRanking = new ScoreVo();
-		
+			
+			
 			for(ScoreVo scoreVo: scoreVoList) {
 				
 				Date scoreDate = scoreVo.getDate();
-				//System.out.println(scoreDate.getTime()/1000/60/60/24/365);
 				
-				long day = scoreDate.getTime()/1000/60/60/24;
-				//System.out.println(day + " : " + name);
-				
+				long days = scoreDate.getTime()/1000/60/60/24;
 				
 				if(name.equals(scoreVo.getWinner())) {
-					winCnt++;
-					if(scoreVo.getWinnerScore() != null && !"".equals(scoreVo.getWinnerScore())) {
-						goalCnt += Integer.parseInt(scoreVo.getWinnerScore());
+					if(days>=15716 && days<=15718){
+						//System.out.println(scoreVo.getWinner() + "  |  " +  scoreVo.getDate() + "     |    " + days);
+						winCnt++;
+						
 					}
-					
-					
 				}
 				if(name.equals(scoreVo.getLooser())) {
-					defeatCnt++;
-					if(scoreVo.getLooserScore() != null && !"".equals(scoreVo.getLooserScore())) {
-						goalCnt += Integer.parseInt(scoreVo.getLooserScore());
-					}
+
 				}
 				
 				
 			}
+			//scoreVoForRanking.setDate(days);
 			scoreVoForRanking.setName(name);
 			scoreVoForRanking.setWinCnt(winCnt);
-			scoreVoForRanking.setDefeatCnt(defeatCnt);
-			scoreVoForRanking.setTotalGoalCnt(goalCnt);
 			rankingInfoList.add(scoreVoForRanking);
 		}
 		
-		for(ScoreVo scoreVo: rankingInfoList) {
-			int rank = 1;
-			int winCnt = scoreVo.getWinCnt();
-			for(ScoreVo scoreVo2: rankingInfoList) {
-				if(winCnt < scoreVo2.getWinCnt()) {
-					rank++;
-				}
-			}
-			scoreVo.setRank(String.valueOf(rank));
-		}
-		
-		Collections.sort(rankingInfoList);
-		//Collections.reverse(rankingInfoList); //역순
 		return rankingInfoList;
 	}
 	

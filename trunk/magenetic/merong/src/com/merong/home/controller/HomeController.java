@@ -93,7 +93,7 @@ public class HomeController {
 	@RequestMapping(value = "/graph")
 	public String selectGraph(Model model) {
 		model.addAttribute("rankingInfoList", homeServiceImpl.selectRankingList(new SortVo(Query.SortDirection.DESCENDING)));
-		model.addAttribute("rankingInfoList", homeServiceImpl.selectChartByDate(new SortVo(Query.SortDirection.ASCENDING)));
+		//model.addAttribute("chartInfoList", homeServiceImpl.selectChartByDate(new SortVo(Query.SortDirection.ASCENDING)));
 		return "graph/graph";
 	}
 
