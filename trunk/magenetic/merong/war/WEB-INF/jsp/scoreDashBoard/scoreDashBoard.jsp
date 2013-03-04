@@ -27,22 +27,22 @@
 	function send() {
 		
 		if($("#paramName1").val() == $("#paramName2").val()) {
-			alert("사람이같스무니다");
+			alert("사람이같습니다");
 			return;
 		}
 		
 		if($("#score1").val() == "") {
-			alert("점수가 없으무니다");
+			alert("점수가 없습니다");
 			return;
 		}
 		
 		if($("#score2").val() == "") {
-			alert("점수가 없으무니다");
+			alert("점수가 없습니다");
 			return;
 		}
 		
 		if($("#score2").val() == $("#score1").val()) {
-			alert("동점이무니다.");
+			alert("동점없습니다.");
 			return;
 		}
 		
