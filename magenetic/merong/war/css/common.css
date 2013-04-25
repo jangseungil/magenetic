@@ -587,20 +587,6 @@ body.whatthe
 	background: black; 
 }
 
-img#sun
-{ 
-	position: relative; width: 100px; height: 100px; 
-}
-
-img#earth
-{ 
-	position: relative;  width: 40px; height: 40px;
-}
-img#moon
-{ 
-	position: relative; width: 20px; height: 20px;
-}
-
 div.hide
 {
 	display: none;
